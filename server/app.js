@@ -3,9 +3,23 @@ var express = require('express')
 var path = require('path')
 var cookieParser = require('cookie-parser')
 var logger = require('morgan')
+require('custom-env').env()
 
 var indexRouter = require('./routes/index')
 var usersRouter = require('./routes/users')
+
+const mysql = require('mysql')
+const connection = mysql.createConnection({
+  host: 'localhost',
+  user: 'root',
+  password: process.env.MYSQL_CREDS,
+  database: 'sql_injection_demo'
+})
+connection.connect((error) => {
+  if (error) throw error
+  console.log('Connected to MySQL!')
+})
+
 
 var app = express()
 
