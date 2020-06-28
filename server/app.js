@@ -3,6 +3,7 @@ var express = require('express')
 var path = require('path')
 var cookieParser = require('cookie-parser')
 var logger = require('morgan')
+const cors = require('cors')
 require('custom-env').env()
 
 // Database
@@ -13,11 +14,10 @@ sequelize.authenticate()
   .catch(error => console.log(error))
 
 sequelize.sync()
-  .then(console.log('success'))
+  .then(console.log('Synced database successfully!'))
 
 // Router files
 var indexRouter = require('./routes/index')
-var usersRouter = require('./routes/users')
 
 var app = express()
 
@@ -31,8 +31,10 @@ app.use(express.urlencoded({ extended: false }))
 app.use(cookieParser())
 app.use(express.static(path.join(__dirname, 'public')))
 
+// This is meant to run on localhost only, so it's ok to allow CORS for all origins
+app.use(cors())
+
 app.use('/', indexRouter)
-app.use('/users', usersRouter)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

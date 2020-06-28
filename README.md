@@ -20,6 +20,7 @@ First clone the repo, then in the root of the repo, do the following.
 4. Run `ALTER USER 'root'@'localhost' IDENTIFIED BY 'new_password';` to change your MySQL password
 5. Run `CREATE DATABASE sql_injection_demo` to create a new database for this project
 6. `QUIT` exits the MySQL monitor
+7. Note: `mysql.server stop` stops the MySQL server. Do not run this if you are using the server.
 
 Add your MySQL credentials to an environment variable.
 ```bash
