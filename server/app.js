@@ -5,21 +5,19 @@ var cookieParser = require('cookie-parser')
 var logger = require('morgan')
 require('custom-env').env()
 
+// Database
+const sequelize = require('./dbconfig/db')
+
+sequelize.authenticate()
+  .then(console.log('Connected to MySQL!'))
+  .catch(error => console.log(error))
+
+sequelize.sync()
+  .then(console.log('success'))
+
+// Router files
 var indexRouter = require('./routes/index')
 var usersRouter = require('./routes/users')
-
-const mysql = require('mysql')
-const connection = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: process.env.MYSQL_CREDS,
-  database: 'sql_injection_demo'
-})
-connection.connect((error) => {
-  if (error) throw error
-  console.log('Connected to MySQL!')
-})
-
 
 var app = express()
 
