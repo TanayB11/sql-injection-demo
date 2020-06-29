@@ -7,13 +7,13 @@ const cors = require('cors')
 require('custom-env').env()
 
 // Database
-const sequelize = require('./dbconfig/db')
+const db = require('./dbconfig/db')
 
-sequelize.authenticate()
+db.authenticate()
   .then(console.log('Connected to MySQL!'))
   .catch(error => console.log(error))
 
-sequelize.sync()
+db.sync()
   .then(console.log('Synced database successfully!'))
 
 // Router files
@@ -31,8 +31,9 @@ app.use(express.urlencoded({ extended: false }))
 app.use(cookieParser())
 app.use(express.static(path.join(__dirname, 'public')))
 
-// This is meant to run on localhost only, so it's ok to allow CORS for all origins
-app.use(cors())
+app.use(cors({
+  origin: 'http://localhost:8080'
+}))
 
 app.use('/', indexRouter)
 
